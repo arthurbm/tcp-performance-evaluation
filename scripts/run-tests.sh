@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configurações
-SERVER_IP="172.20.0.10"
+SERVER_IP="10.5.0.10"
 TEST_DURATION=30
 RESULTS_DIR="/results/raw"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)

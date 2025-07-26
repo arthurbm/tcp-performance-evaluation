@@ -2,7 +2,7 @@
 
 echo "=== TCP Performance Test Server ==="
 echo "Starting iperf3 server on port 5201..."
-echo "Server IP: 172.20.0.10"
+echo "Server IP: 10.5.0.10"
 echo "=================================="
 
 # Exibir informações do sistema

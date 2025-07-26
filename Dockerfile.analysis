@@ -1,4 +1,7 @@
-FROM ghcr.io/astral-sh/uv:python3.11-debian
+# Dockerfile para análise de resultados de testes de desempenho TCP
+
+# Essa é a versão do uv com python 3.11 e bookworm-slim (que é debian 12)
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
 
 # Evitar prompts durante a instalação
 ENV DEBIAN_FRONTEND=noninteractive

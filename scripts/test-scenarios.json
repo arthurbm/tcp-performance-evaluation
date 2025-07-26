@@ -2,7 +2,7 @@
   "test_duration": 30,
   "interval_between_tests": 5,
   "repetitions": 3,
-  "server_ip": "172.20.0.10",
+  "server_ip": "10.5.0.10",
   "scenarios": {
     "baseline": {
       "description": "Teste baseline com configurações padrão",
