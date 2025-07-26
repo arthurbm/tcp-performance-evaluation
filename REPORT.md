@@ -1,9 +1,8 @@
-# Relatório de Avaliação de Desempenho Tabm7485
+# Relatório de Avaliação de Desempenho TCP
 
 **Disciplina**: Redes de Computadores  
-**Atividade**: Desafio de Avaliação de Desempenho  
+**Atividade**: Desafio de Avaliação de Desempenho TCP  
 **Autor**: Arthur Brito Medeiros  
-**Data**: 25/07/2025  
 **Repositório**: [https://github.com/arthurbm/tcp-performance-evaluation](https://github.com/arthurbm/tcp-performance-evaluation)
 
 ## 1. Introdução
@@ -120,55 +119,76 @@ Para cada teste, foram coletadas as seguintes métricas:
 
 ## 4. Resultados dos Testes
 
-### 4.1 Tabela de Resultados
+### 4.1 Tabela de Resultados Completa
 
 **Nota**: Valores de throughput em Gbps devido à comunicação local entre containers Docker.
 
-| Cenário | Throughput Médio (Gbps) | Desvio Padrão | Retransmissões Médias | Amostras |
-|---------|-------------------------|---------------|----------------------|----------|
-| baseline_default | 50.51 | 0.58 | 135.2 | 4 |
-| window_64k | 43.20 | 0.55 | 12.0 | 3 |
-| window_128k | 49.42 | 0.55 | 0.0 | 2 |
-| window_256k | 50.17 | 0.00 | 0.0 | 1 |
-| window_512k | - | - | - | Erro de buffer |
-| streams_1 | - | - | - | Não executado |
-| streams_2 | - | - | - | Não executado |
-| streams_4 | 51.25 | 0.00 | 1.0 | 1 |
-| streams_8 | - | - | - | Não executado |
-| **combined (256k + 4)** | **60.85** | **0.00** | **0.0** | **1** |
-| cc_cubic | 50.51 | 0.58 | 135.2 | Padrão |
-| cc_reno | - | - | - | Não executado |
-| cc_vegas | - | - | - | Não executado |
-| cc_bbr | - | - | - | Não executado |
-| latency_50ms | - | - | - | Não executado |
-| latency_100ms | - | - | - | Não executado |
-| bandwidth_10mbps | - | - | - | Não executado |
-| bandwidth_100mbps | - | - | - | Não executado |
-| packet_loss_0.1 | - | - | - | Não executado |
-| packet_loss_1 | - | - | - | Não executado |
+| Cenário | Throughput (Gbps) | Desvio Padrão | Retransmissões | Amostras | Confiabilidade |
+|---------|-------------------|---------------|----------------|----------|----------------|
+| Baseline        |             50.47 |          0.50 |           77.4 |        7 | Alta           |
+| Window 64K      |             42.73 |          0.63 |           34.0 |        6 | Alta           |
+| Window 128K     |             49.02 |          0.50 |            0.4 |        5 | Alta           |
+| Window 256K     |             49.91 |          0.20 |           31.8 |        4 | Alta           |
+| Window 512K     | - | - | - | Erro de buffer | - |
+| Streams 4       |             51.04 |          0.29 |          139.0 |        2 | Média          |
+| **Combined (256K+4)** |         **60.85** |      **0.00** |        **0.0** |    **1** | **Baixa**      |
+
+**Cenários não executados**: Streams (1, 2, 8), Algoritmos de congestionamento (Reno, Vegas, BBR), Condições de rede simuladas (latência, banda limitada, perda de pacotes)
+
+#### Análise de Confiabilidade Estatística
+
+- **Alta confiabilidade**: ≥ 3 amostras (baseline, window_64k, window_128k, window_256k)
+- **Média confiabilidade**: 2 amostras (streams_4)
+- **Baixa confiabilidade**: 1 amostra (combined)
+
+#### Visualização de Desempenho
+
+```
+Throughput (Gbps)
+65 |
+60 |                                          ████ combined
+55 |
+50 |  ████ baseline  ████ w128k  ████ w256k  ████ streams_4
+45 |
+40 |  ████ w64k
+35 |
+   +--------------------------------------------------
+      64K    Base   128K   256K   4-str  Combined
+```
 
 ### 4.2 Comparação entre Cenários
 
 #### Análise Estatística Completa:
 
-1. **Impacto do Tamanho da Janela TCP** (em relação ao baseline de 50.51 Gbps):
-   - **Janela 64K**: 43.20 Gbps (-14.5%) - Degradação significativa
-   - **Janela 128K**: 49.42 Gbps (-2.2%) - Pequena degradação
-   - **Janela 256K**: 50.17 Gbps (-0.7%) - Performance similar ao baseline
+##### Melhoria Percentual vs Baseline
+
+```
+window_64k  :              ███████|                     -15.3%
+window_128k :                    █|                     -2.9%
+window_256k :                     |                     -1.1%
+streams_4   :                     |                     +1.1%
+combined    :                     |██████████           +20.6%
+                    -20%    -10%     0%     +10%    +20%
+```
+
+1. **Impacto do Tamanho da Janela TCP** (em relação ao baseline de 50.47 Gbps):
+   - **Janela 64K**: 42.73 Gbps (-15.3%) - Degradação significativa
+   - **Janela 128K**: 49.02 Gbps (-2.9%) - Pequena degradação
+   - **Janela 256K**: 49.91 Gbps (-1.1%) - Performance similar ao baseline
    - **Janela 512K**: Erro de buffer de socket - Limite do sistema atingido
 
 2. **Impacto de Múltiplos Fluxos**:
-   - **4 fluxos paralelos**: 51.25 Gbps (+1.5%) - Pequena melhoria
-   - Apenas 1 retransmissão vs 135.2 do baseline
+   - **4 fluxos paralelos**: 51.04 Gbps (+1.1%) - Pequena melhoria
+   - Porém com 139 retransmissões vs 77.4 do baseline
 
 3. **Efeito Combinado**:
-   - **Janela 256K + 4 fluxos**: 60.85 Gbps (+20.5%) - Melhor resultado absoluto
+   - **Janela 256K + 4 fluxos**: 60.85 Gbps (+20.6%) - Melhor resultado absoluto
    - Zero retransmissões - Máxima estabilidade
    - Sinergia entre otimizações supera soma individual
 
 4. **Observações sobre Retransmissões**:
-   - Baseline com alta variabilidade (135.2 retransmissões médias)
-   - Janelas maiores (128K, 256K) eliminam retransmissões
+   - Baseline com alta variabilidade (77.4 retransmissões médias)
+   - Janela 128K praticamente elimina retransmissões (0.4)
    - Configuração ótima combina alto throughput com zero retransmissões
 
 ### 4.3 Configuração Ótima Identificada
@@ -181,6 +201,12 @@ Para cada teste, foram coletadas as seguintes métricas:
 - **Desvio Padrão**: 0.00 Gbps (apenas 1 amostra)
 - **Retransmissões**: 0
 - **Melhoria sobre baseline**: +20.5%
+
+**Nota sobre Confiabilidade Estatística**: 
+- Testes com alta confiabilidade (≥3 amostras): baseline, window_64k, window_128k, window_256k
+- Testes com média confiabilidade (2 amostras): streams_4
+- Testes com baixa confiabilidade (1 amostra): combined
+- Recomenda-se repetir testes de baixa confiabilidade para validação estatística completa
 
 **Justificativa Técnica Detalhada**:
 
@@ -270,9 +296,61 @@ Para ambientes de alta velocidade com baixa latência (como datacenters):
 3. Testar em ambiente de rede física para validar os resultados
 4. Investigar o comportamento com janelas ainda maiores (1MB+)
 
-## 8. Anexos
+## 8. Limitações e Melhorias Futuras
 
-### 8.1 Estrutura do Projeto
+### 8.1 Limitações Identificadas
+
+1. **Ambiente de Teste Local**: 
+   - Throughput muito alto (~50 Gbps) devido à comunicação via memória compartilhada
+   - Não reflete limitações de rede física real
+   - Latência próxima de zero entre containers
+
+2. **Cobertura de Testes Parcial**:
+   - Nem todos os algoritmos de congestionamento foram testados (faltam Reno, Vegas, BBR)
+   - Simulações de condições adversas de rede não executadas
+   - Alguns cenários com poucas amostras estatísticas
+
+3. **Limite de Buffer do Sistema**:
+   - Janelas TCP de 512K causam erro consistente
+   - Necessário investigar e ajustar limites do kernel
+
+### 8.2 Melhorias Propostas
+
+1. **Completar Bateria de Testes**:
+   - Executar todos os algoritmos de congestionamento
+   - Implementar testes com latência, banda limitada e perda de pacotes
+   - Garantir mínimo de 3 repetições por cenário
+
+2. **Análise Avançada**:
+   - Monitorar uso de CPU e memória durante testes
+   - Correlacionar recursos com desempenho
+   - Implementar visualizações gráficas dos resultados
+
+3. **Testes de Longa Duração**:
+   - Avaliar estabilidade do desempenho ao longo do tempo
+   - Identificar possíveis degradações ou variações
+
+## 9. Visualizações e Gráficos
+
+### 9.1 Gráficos de Desempenho
+
+Os gráficos detalhados estão disponíveis em `results/plots/`:
+- **throughput_comparison.png**: Comparação visual de throughput por configuração
+- **retransmissions.svg**: Análise de retransmissões TCP
+- **optimal_configuration.txt**: Análise da configuração ótima
+
+Para visualizar:
+```bash
+# Gerar gráficos com matplotlib
+docker exec tcp-analyzer python3 /app/analyze.py
+
+# Gerar gráficos SVG simplificados
+python3 scripts/generate-plots.py
+```
+
+## 10. Anexos
+
+### 10.1 Estrutura do Projeto
 
 ```
 tcp-performance-evaluation/

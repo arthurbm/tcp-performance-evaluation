@@ -1,0 +1,12 @@
+=== CONFIGURAÇÃO ÓTIMA IDENTIFICADA ===
+
+Teste: 20250726_025153_baseline_quick.json
+Throughput médio: 50174.03 Mbps
+Retransmissões médias: 0
+CPU Sender: 99.13%
+RTT médio: 0.02 ms
+Score composto: 0.500
+
+=== TOP 5 CONFIGURAÇÕES ===
+                          test_name  throughput_mbps  score
+20250726_025153_baseline_quick.json         50174.03    0.5

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font: bold 24px sans-serif; }
+    .label { font: 14px sans-serif; }
+    .axis { font: 12px sans-serif; }
+    .bar { fill: #FF5722; opacity: 0.8; }
+    .bar:hover { opacity: 1; }
+    .grid { stroke: #ddd; stroke-width: 1; opacity: 0.5; }
+  </style>
+  
+  <text x="400.0" y="40" text-anchor="middle" class="title">Retransmissões TCP por Configuração</text>
+  <line x1="100" y1="500.0" x2="750" y2="500.0" class="grid"/>
+  <text x="90" y="505.0" text-anchor="end" class="axis">0</text>
+  <line x1="100" y1="416.0" x2="750" y2="416.0" class="grid"/>
+  <text x="90" y="421.0" text-anchor="end" class="axis">15</text>
+  <line x1="100" y1="332.0" x2="750" y2="332.0" class="grid"/>
+  <text x="90" y="337.0" text-anchor="end" class="axis">31</text>
+  <line x1="100" y1="248.0" x2="750" y2="248.0" class="grid"/>
+  <text x="90" y="253.0" text-anchor="end" class="axis">46</text>
+  <line x1="100" y1="164.0" x2="750" y2="164.0" class="grid"/>
+  <text x="90" y="169.0" text-anchor="end" class="axis">62</text>
+  <line x1="100" y1="80.0" x2="750" y2="80.0" class="grid"/>
+  <text x="90" y="85.0" text-anchor="end" class="axis">77</text>
+  <rect x="116.25" y="80.0" width="130.0" height="420.0" class="bar">
+    <title>Baseline: 77 retransmissões</title>
+  </rect>
+  <text x="181.25" y="75.0" text-anchor="middle" class="axis">77</text>
+  <text x="181.25" y="520" text-anchor="middle" class="label" transform="rotate(-45 181.25 520)">Baseline</text>
+  <rect x="278.75" y="315.5719557195572" width="130.0" height="184.4280442804428" class="bar">
+    <title>Window 64K: 34 retransmissões</title>
+  </rect>
+  <text x="343.75" y="310.5719557195572" text-anchor="middle" class="axis">34</text>
+  <text x="343.75" y="520" text-anchor="middle" class="label" transform="rotate(-45 343.75 520)">Window 64K</text>
+  <rect x="441.25" y="497.83025830258305" width="130.0" height="2.169741697416974" class="bar">
+    <title>Window 128K: 0 retransmissões</title>
+  </rect>
+  <text x="506.25" y="492.83025830258305" text-anchor="middle" class="axis">0</text>
+  <text x="506.25" y="520" text-anchor="middle" class="label" transform="rotate(-45 506.25 520)">Window 128K</text>
+  <rect x="603.75" y="327.7767527675277" width="130.0" height="172.22324723247232" class="bar">
+    <title>Window 256K: 32 retransmissões</title>
+  </rect>
+  <text x="668.75" y="322.7767527675277" text-anchor="middle" class="axis">32</text>
+  <text x="668.75" y="520" text-anchor="middle" class="label" transform="rotate(-45 668.75 520)">Window 256K</text>
+
+  <line x1="100" y1="80" x2="100" y2="500" stroke="#333" stroke-width="2"/>
+  <line x1="100" y1="500" x2="750" y2="500" stroke="#333" stroke-width="2"/>
+  
+  <text x="400.0" y="580" text-anchor="middle" class="label">Configuração</text>
+  <text x="40" y="300.0" text-anchor="middle" class="label" transform="rotate(-90 40 300.0)">Retransmissões</text>
+</svg>
