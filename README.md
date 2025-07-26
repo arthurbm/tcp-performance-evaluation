@@ -156,6 +156,11 @@ docker compose down
 docker compose down -v
 ```
 
+### Limpar resultados de testes:
+```bash
+./scripts/clean-results.sh
+```
+
 ## Análise Manual
 
 Para executar análises específicas dentro do container analyzer:

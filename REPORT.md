@@ -1,13 +1,18 @@
-# Relatório de Avaliação de Desempenho TCP
+# Relatório de Avaliação de Desempenho Tabm7485
 
 **Disciplina**: Redes de Computadores  
 **Atividade**: Desafio de Avaliação de Desempenho  
-**Autor**: Arthur  
+**Autor**: Arthur Brito Medeiros  
 **Data**: 25/07/2025  
+**Repositório**: [https://github.com/arthurbm/tcp-performance-evaluation](https://github.com/arthurbm/tcp-performance-evaluation)
 
 ## 1. Introdução
 
 Este relatório documenta a realização experimental de testes de desempenho TCP utilizando iperf3, com o objetivo de identificar a configuração ideal que maximize o throughput e minimize a latência da conexão. Os testes consideram variações no tamanho da janela TCP e no número de fluxos simultâneos, além de diferentes algoritmos de controle de congestionamento e condições simuladas de rede.
+
+### 1.1 Código-fonte e Reprodutibilidade
+
+Todo o código-fonte, scripts de automação, configurações Docker e documentação adicional estão disponíveis no repositório GitHub mencionado acima. O projeto foi desenvolvido com foco em reprodutibilidade, permitindo que qualquer pessoa possa replicar os experimentos seguindo as instruções no README.md.
 
 ## 2. Ambiente Utilizado
 
