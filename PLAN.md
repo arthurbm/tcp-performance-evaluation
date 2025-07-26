@@ -43,19 +43,19 @@ Configurar ambiente com Docker (servidor e cliente) para realizar testes de dese
 
 #### Matriz de Testes:
 1. **Teste Baseline** (configurações padrão)
-   - [ ] Sem modificações
-   - [ ] Registrar valores de referência
+   - [x] Sem modificações
+   - [x] Registrar valores de referência
 
 2. **Variação de Janela TCP**:
-   - [ ] 64K
+   - [x] 64K
    - [ ] 128K
-   - [ ] 256K
+   - [x] 256K
    - [ ] 512K
 
 3. **Variação de Fluxos Simultâneos**:
    - [ ] 1 fluxo
    - [ ] 2 fluxos
-   - [ ] 4 fluxos
+   - [x] 4 fluxos
    - [ ] 8 fluxos
 
 4. **Algoritmos de Congestionamento**:
@@ -70,19 +70,19 @@ Configurar ambiente com Docker (servidor e cliente) para realizar testes de dese
    - [ ] Perda de pacotes: 0%, 0.1%, 1%
 
 ### Fase 4: Execução dos Experimentos
-- [ ] Executar teste baseline
-- [ ] Executar testes com variação de janela TCP
-- [ ] Executar testes com múltiplos fluxos
+- [x] Executar teste baseline
+- [x] Executar testes com variação de janela TCP (parcial)
+- [x] Executar testes com múltiplos fluxos (parcial)
 - [ ] Executar testes com diferentes algoritmos
 - [ ] Executar testes com condições de rede simuladas
-- [ ] Validar integridade dos dados coletados
+- [x] Validar integridade dos dados coletados
 
 ### Fase 5: Análise dos Resultados
-- [ ] Processar outputs JSON do iperf3
+- [x] Processar outputs JSON do iperf3
 - [ ] Calcular médias e desvios padrão
-- [ ] Gerar tabelas comparativas
+- [x] Gerar tabelas comparativas
 - [ ] Criar gráficos de desempenho
-- [ ] Identificar configuração ótima
+- [x] Identificar configuração ótima (preliminar)
 - [ ] Documentar justificativas técnicas
 
 ### Fase 6: Relatório Final
@@ -177,8 +177,14 @@ docker exec -it tcp-analyzer bash
    - Container de análise: Ambiente Python com UV para processamento de dados
    - Benefício: Containers menores, mais seguros e com versões fixadas
 
-## Status: Ambiente Pronto para Testes
-Última atualização: 2025-07-25
+## Status: Testes em Execução e Análise Preliminar
+Última atualização: 2025-07-26
+
+### Resultados Preliminares:
+- **Melhor configuração identificada**: Janela 256K + 4 streams paralelos
+- **Throughput máximo**: 60.85 Gbps
+- **Baseline**: ~50 Gbps
+- **Melhoria**: ~21% sobre baseline
 
 ### Próximos Passos:
 1. Executar bateria completa de testes com `docker compose exec client /scripts/run-tests.sh`

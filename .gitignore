@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+analysis/.venv/
+venv/
+ENV/
+env/
+
+# UV
+analysis/.venv/
+
+# Results (keep structure but ignore data)
+results/raw/*.json
+results/processed/*.csv
+results/plots/*.png
+results/*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*~

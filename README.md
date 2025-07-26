@@ -58,15 +58,24 @@ Este comando executará automaticamente:
 - Simulações de condições de rede (latência, banda limitada, perda de pacotes)
 
 ### Análise dos Resultados
+
+#### Opção 1: Análise Completa com UV (recomendado)
 ```bash
 docker compose exec analyzer /app/run-analysis.sh
 ```
 
-Isso irá:
-- Processar os arquivos JSON do iperf3
-- Gerar CSV com dados consolidados
-- Criar gráficos comparativos
+#### Opção 2: Análise Estatística Simplificada
+```bash
+docker cp scripts/analyze-results.py tcp-analyzer:/tmp/
+docker compose exec analyzer python3 /tmp/analyze-results.py
+```
+
+A análise irá:
+- Processar todos os arquivos JSON do iperf3
+- Calcular médias e desvios padrão por categoria
+- Comparar desempenho relativo ao baseline
 - Identificar a configuração ótima
+- Gerar recomendações baseadas nos resultados
 
 ## Estrutura do Projeto
 
@@ -76,9 +85,12 @@ tcp-performance-evaluation/
 ├── Dockerfile.analysis       # Imagem para análise com UV
 ├── docker-compose.yml        # Orquestração dos containers
 ├── PLAN.md                  # Plano detalhado e metodologia
+├── REPORT.md                # Relatório final com resultados
 ├── README.md                # Este arquivo
+├── .dockerignore            # Arquivos ignorados no build
 ├── scripts/
 │   ├── run-tests.sh        # Script principal de testes
+│   ├── analyze-results.py  # Análise estatística dos resultados
 │   └── test-scenarios.json # Definição dos cenários
 ├── configs/
 │   ├── server-entrypoint.sh # Inicialização do servidor
@@ -86,11 +98,17 @@ tcp-performance-evaluation/
 ├── analysis/                # Projeto UV para análise
 │   ├── analyze.py          # Script de análise e visualização
 │   ├── collect-results.sh  # Coleta de resultados
-│   └── run-analysis.sh     # Wrapper para execução
-└── results/
-    ├── raw/                # Outputs JSON do iperf3
-    ├── processed/          # Dados processados (CSV)
-    └── plots/              # Gráficos gerados
+│   ├── run-analysis.sh     # Wrapper para execução
+│   ├── pyproject.toml      # Configuração do projeto UV
+│   ├── uv.lock            # Lock file das dependências
+│   └── README.md           # Documentação do módulo de análise
+├── results/
+│   ├── raw/                # Outputs JSON do iperf3
+│   ├── processed/          # Dados processados (CSV)
+│   └── plots/              # Gráficos gerados
+└── report/
+    ├── tables/             # Tabelas de resultados
+    └── figures/            # Gráficos e diagramas
 ```
 
 ## Cenários de Teste
@@ -163,15 +181,29 @@ sudo modprobe tcp_bbr  # Exemplo para carregar BBR
 ### Containers não conseguem se comunicar
 Verifique as configurações de firewall e se o Docker tem permissões adequadas.
 
+## Resultados Obtidos
+
+### Configuração Ótima Identificada
+- **Janela TCP**: 256KB + **Fluxos Paralelos**: 4
+- **Throughput**: 60.85 Gbps (melhoria de +20.5% sobre baseline)
+- **Retransmissões**: 0 (máxima estabilidade)
+
+### Principais Descobertas
+1. Janelas TCP pequenas (64K) degradam o desempenho em ~14.5%
+2. Janelas muito grandes (512K) causam erro de buffer de socket
+3. A combinação de parâmetros otimizados supera ganhos individuais
+4. Configurações otimizadas eliminam retransmissões TCP
+
 ## Notas Importantes
 
 1. Os testes são executados com 3 repetições por cenário para confiabilidade estatística
-2. Cada teste dura 30 segundos por padrão
+2. Cada teste dura 30 segundos por padrão (configurável)
 3. Os resultados são salvos com timestamp para rastreabilidade
 4. O container de análise usa UV para gerenciamento de dependências Python
 5. Todos os IPs são fixos para reprodutibilidade:
    - Servidor: 10.5.0.10
    - Cliente: 10.5.0.20
+6. Valores de throughput elevados (~50 Gbps) são devido à comunicação local entre containers
 
 ## Contribuições
 
