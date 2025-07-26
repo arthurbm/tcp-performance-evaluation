@@ -1,0 +1,159 @@
+{
+  "test_duration": 30,
+  "interval_between_tests": 5,
+  "repetitions": 3,
+  "server_ip": "172.20.0.10",
+  "scenarios": {
+    "baseline": {
+      "description": "Teste baseline com configurações padrão",
+      "tests": [
+        {
+          "name": "baseline_default",
+          "params": "",
+          "description": "Configurações padrão do iperf3"
+        }
+      ]
+    },
+    "window_size": {
+      "description": "Variação do tamanho da janela TCP",
+      "tests": [
+        {
+          "name": "window_64k",
+          "params": "-w 64K",
+          "description": "Janela TCP de 64KB"
+        },
+        {
+          "name": "window_128k",
+          "params": "-w 128K",
+          "description": "Janela TCP de 128KB"
+        },
+        {
+          "name": "window_256k",
+          "params": "-w 256K",
+          "description": "Janela TCP de 256KB"
+        },
+        {
+          "name": "window_512k",
+          "params": "-w 512K",
+          "description": "Janela TCP de 512KB"
+        }
+      ]
+    },
+    "parallel_streams": {
+      "description": "Variação do número de fluxos paralelos",
+      "tests": [
+        {
+          "name": "streams_1",
+          "params": "-P 1",
+          "description": "1 fluxo paralelo"
+        },
+        {
+          "name": "streams_2",
+          "params": "-P 2",
+          "description": "2 fluxos paralelos"
+        },
+        {
+          "name": "streams_4",
+          "params": "-P 4",
+          "description": "4 fluxos paralelos"
+        },
+        {
+          "name": "streams_8",
+          "params": "-P 8",
+          "description": "8 fluxos paralelos"
+        }
+      ]
+    },
+    "congestion_control": {
+      "description": "Diferentes algoritmos de controle de congestionamento",
+      "tests": [
+        {
+          "name": "cc_cubic",
+          "algorithm": "cubic",
+          "params": "",
+          "description": "Algoritmo CUBIC (padrão)"
+        },
+        {
+          "name": "cc_reno",
+          "algorithm": "reno",
+          "params": "",
+          "description": "Algoritmo Reno"
+        },
+        {
+          "name": "cc_vegas",
+          "algorithm": "vegas",
+          "params": "",
+          "description": "Algoritmo Vegas"
+        },
+        {
+          "name": "cc_bbr",
+          "algorithm": "bbr",
+          "params": "",
+          "description": "Algoritmo BBR (se disponível)"
+        }
+      ]
+    },
+    "network_conditions": {
+      "description": "Simulação de diferentes condições de rede com tc",
+      "tests": [
+        {
+          "name": "latency_50ms",
+          "tc_command": "tc qdisc add dev eth0 root netem delay 50ms",
+          "params": "",
+          "description": "Latência de 50ms"
+        },
+        {
+          "name": "latency_100ms",
+          "tc_command": "tc qdisc add dev eth0 root netem delay 100ms",
+          "params": "",
+          "description": "Latência de 100ms"
+        },
+        {
+          "name": "bandwidth_10mbps",
+          "tc_command": "tc qdisc add dev eth0 root tbf rate 10mbit burst 32kbit latency 400ms",
+          "params": "",
+          "description": "Limitação de banda a 10 Mbps"
+        },
+        {
+          "name": "bandwidth_100mbps",
+          "tc_command": "tc qdisc add dev eth0 root tbf rate 100mbit burst 32kbit latency 400ms",
+          "params": "",
+          "description": "Limitação de banda a 100 Mbps"
+        },
+        {
+          "name": "packet_loss_0.1",
+          "tc_command": "tc qdisc add dev eth0 root netem loss 0.1%",
+          "params": "",
+          "description": "Perda de pacotes de 0.1%"
+        },
+        {
+          "name": "packet_loss_1",
+          "tc_command": "tc qdisc add dev eth0 root netem loss 1%",
+          "params": "",
+          "description": "Perda de pacotes de 1%"
+        }
+      ]
+    },
+    "combined": {
+      "description": "Cenários combinados para identificar configuração ótima",
+      "tests": [
+        {
+          "name": "optimal_candidate_1",
+          "params": "-w 256K -P 4",
+          "description": "Janela 256K com 4 fluxos"
+        },
+        {
+          "name": "optimal_candidate_2",
+          "params": "-w 512K -P 2",
+          "description": "Janela 512K com 2 fluxos"
+        },
+        {
+          "name": "optimal_candidate_3",
+          "algorithm": "bbr",
+          "params": "-w 256K -P 4",
+          "description": "BBR com janela 256K e 4 fluxos"
+        }
+      ]
+    }
+  }
+}

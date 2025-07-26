@@ -1,0 +1,29 @@
+FROM ghcr.io/astral-sh/uv:python3.11-debian
+
+# Evitar prompts durante a instalação
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instalar dependências do sistema necessárias para análise
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar diretório de trabalho
+WORKDIR /app
+
+# Copiar projeto analysis com uv
+COPY analysis/ .
+
+# Instalar dependências com uv usando cache para melhor performance
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --locked --compile-bytecode
+
+# Tornar scripts executáveis
+RUN chmod +x *.sh *.py
+
+# Diretório de trabalho para resultados
+WORKDIR /results
+
+# Comando padrão - usar uv run para executar scripts Python
+CMD ["/bin/bash"]

@@ -1,0 +1,36 @@
+FROM debian:11-slim
+
+# Evitar prompts durante a instalação
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Atualizar repositórios e instalar ferramentas necessárias para testes de rede
+RUN apt-get update && apt-get install -y \
+    iperf3 \
+    iproute2 \
+    procps \
+    net-tools \
+    iputils-ping \
+    tcpdump \
+    curl \
+    jq \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar diretórios para resultados
+RUN mkdir -p /results /scripts /configs
+
+# Copiar scripts e configurações
+COPY scripts/run-tests.sh /scripts/
+COPY scripts/test-scenarios.json /scripts/
+COPY configs/ /configs/
+
+# Tornar scripts executáveis
+RUN chmod +x /scripts/*.sh /configs/*.sh
+
+# Diretório de trabalho
+WORKDIR /results
+
+# Expor porta padrão do iperf3
+EXPOSE 5201
+
+# Comando padrão (será sobrescrito pelo docker-compose)
+CMD ["/bin/bash"]

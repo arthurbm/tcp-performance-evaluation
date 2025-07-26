@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: tcp-server
+    hostname: server
+    networks:
+      testnet:
+        ipv4_address: 172.20.0.10
+    volumes:
+      - ./results:/results
+      - ./scripts:/scripts:ro
+      - ./configs:/configs:ro
+    cap_add:
+      - NET_ADMIN  # Necessário para usar tc (traffic control)
+    command: ["/configs/server-entrypoint.sh"]
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    container_name: tcp-client
+    hostname: client
+    networks:
+      testnet:
+        ipv4_address: 172.20.0.20
+    volumes:
+      - ./results:/results
+      - ./scripts:/scripts:ro
+      - ./configs:/configs:ro
+    cap_add:
+      - NET_ADMIN  # Necessário para usar tc (traffic control)
+    depends_on:
+      - server
+    command: ["/configs/client-entrypoint.sh"]
+    stdin_open: true
+    tty: true
+
+  analyzer:
+    build:
+      context: .
+      dockerfile: Dockerfile.analysis
+    container_name: tcp-analyzer
+    hostname: analyzer
+    volumes:
+      - ./results:/results
+      - ./analysis:/app:ro
+    depends_on:
+      - server
+      - client
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash"]
+
+networks:
+  testnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1
+    driver_opts:
+      com.docker.network.bridge.name: tcp-test-bridge
