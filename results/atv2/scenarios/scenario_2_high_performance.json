@@ -1,0 +1,20 @@
+{
+  "name": "scenario_2_high_performance",
+  "description": "High Performance Computing (HPC)",
+  "objective": "Maximizar throughput para transferências massivas de dados em datacenter",
+  "iperf_params": "-w 512K -P 8",
+  "tcp_settings": {
+    "congestion_control": "bbr",
+    "window_size": "512K",
+    "parallel_streams": 8
+  },
+  "network_conditions": {
+    "latency_ms": 1,
+    "bandwidth_mbps": null,
+    "packet_loss_percent": null,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "BBR (Bottleneck Bandwidth and Round-trip propagation time) mantém alta utilização sem causar buffers cheios. Janela grande (512KB) e 8 fluxos paralelos exploram ao máximo a capacidade de redes de alta velocidade com baixa latência, típicas de datacenters modernos."
+}

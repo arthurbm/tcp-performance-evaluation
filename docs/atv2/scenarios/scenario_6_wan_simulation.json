@@ -1,0 +1,20 @@
+{
+  "name": "scenario_6_wan_simulation",
+  "description": "WAN Intercontinental",
+  "objective": "Simular conexão de longa distância com alto BDP",
+  "iperf_params": "-w 256K -P 4",
+  "tcp_settings": {
+    "congestion_control": "bbr",
+    "window_size": "256K",
+    "parallel_streams": 4
+  },
+  "network_conditions": {
+    "latency_ms": 100,
+    "bandwidth_mbps": 50,
+    "packet_loss_percent": 0.1,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "BBR é otimizado para redes com alto BDP (Bandwidth-Delay Product = 50Mbps * 100ms = 625KB). A janela de 256KB permite boa utilização sem desperdício. BBR estima continuamente a banda disponível e RTT mínimo, adaptando-se bem a variações. Múltiplos fluxos (4) compensam perdas isoladas e melhoram fairness com outros fluxos."
+}

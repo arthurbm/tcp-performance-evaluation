@@ -1,0 +1,20 @@
+{
+  "name": "scenario_3_congested_network",
+  "description": "Rede Corporativa Congestionada",
+  "objective": "Avaliar comportamento conservador em rede com recursos limitados",
+  "iperf_params": "-w 128K -P 4",
+  "tcp_settings": {
+    "congestion_control": "vegas",
+    "window_size": "128K",
+    "parallel_streams": 4
+  },
+  "network_conditions": {
+    "latency_ms": 50,
+    "bandwidth_mbps": 10,
+    "packet_loss_percent": null,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "Vegas detecta congestionamento através de variações no RTT, sendo mais conservador que CUBIC. Com banda limitada (10Mbps) e latência moderada (50ms), Vegas evita saturar o enlace. A janela de 128KB e 4 fluxos balanceiam utilização e fairness em ambiente corporativo compartilhado."
+}

@@ -1,0 +1,20 @@
+{
+  "name": "scenario_4_lossy_network",
+  "description": "Rede Sem Fio Instável",
+  "objective": "Testar resiliência e recuperação em ambiente com perdas",
+  "iperf_params": "-w 256K -P 2",
+  "tcp_settings": {
+    "congestion_control": "reno",
+    "window_size": "256K",
+    "parallel_streams": 2
+  },
+  "network_conditions": {
+    "latency_ms": 30,
+    "bandwidth_mbps": null,
+    "packet_loss_percent": 0.5,
+    "jitter_ms": 10
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "Reno implementa Fast Retransmit e Fast Recovery, sendo eficiente para perdas isoladas típicas de redes sem fio. A janela de 256KB é conservadora o suficiente para recuperação rápida. Dois fluxos fornecem redundância sem saturar o meio compartilhado. Jitter de 10ms simula variações típicas de WiFi."
+}

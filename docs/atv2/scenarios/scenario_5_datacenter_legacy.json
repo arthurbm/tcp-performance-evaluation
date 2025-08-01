@@ -1,0 +1,20 @@
+{
+  "name": "scenario_5_datacenter_legacy",
+  "description": "Datacenter Legacy",
+  "objective": "Otimização para infraestrutura antiga com limitações de hardware",
+  "iperf_params": "-w 64K",
+  "tcp_settings": {
+    "congestion_control": "cubic",
+    "window_size": "64K",
+    "parallel_streams": 1
+  },
+  "network_conditions": {
+    "latency_ms": 5,
+    "bandwidth_mbps": 100,
+    "packet_loss_percent": null,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "Hardware antigo frequentemente tem buffers limitados e processamento mais lento. Janela pequena (64KB) evita overflow de buffers. CUBIC funciona bem em ambientes estáveis e previsíveis. Fluxo único evita contenção em switches/NICs antigas. Banda de 100Mbps representa Fast Ethernet típico de infraestrutura legacy."
+}

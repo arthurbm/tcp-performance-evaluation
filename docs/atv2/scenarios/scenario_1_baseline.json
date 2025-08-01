@@ -1,0 +1,20 @@
+{
+  "name": "scenario_1_baseline",
+  "description": "Baseline - Rede Ideal",
+  "objective": "Estabelecer referência de desempenho em condições ideais",
+  "iperf_params": "",
+  "tcp_settings": {
+    "congestion_control": "cubic",
+    "window_size": null,
+    "parallel_streams": 1
+  },
+  "network_conditions": {
+    "latency_ms": null,
+    "bandwidth_mbps": null,
+    "packet_loss_percent": null,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "CUBIC é o algoritmo padrão do Linux, otimizado para redes modernas. Sem limitações artificiais, fornece o melhor desempenho possível como referência."
+}
