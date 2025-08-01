@@ -14,7 +14,7 @@ Este relatório apresenta os resultados completos da análise comparativa de alg
 ### Principais Descobertas
 
 1. **Melhor Desempenho Geral**: CUBIC apresentou o melhor throughput médio em condições ideais (48.97 Gbps)
-2. **Algoritmo Mais Estável**: Illinois demonstrou a menor variabilidade nos resultados
+2. **Algoritmo Mais Estável**: CUBIC demonstrou a menor variabilidade nos resultados (CV=0.25%)
 3. **Impacto da Latência**: Redução drástica de até 99.5% no throughput
 4. **Impacto da Perda de Pacotes**: Redução de aproximadamente 50% no desempenho
 
@@ -281,10 +281,10 @@ Uma perda de apenas 0.5% teve impacto desproporcional:
 
 | Algoritmo | CV (%) | Classificação |
 |-----------|--------|---------------|
-| Illinois  | 1.4    | Muito Estável |
 | CUBIC     | 0.25   | Muito Estável |
 | Vegas     | 0.58   | Muito Estável |
 | BBR       | 1.19   | Estável       |
+| Illinois  | 1.38   | Estável       |
 | Reno      | 1.58   | Estável       |
 | Westwood  | 2.03   | Variável      |
 
@@ -343,9 +343,9 @@ Uma perda de apenas 0.5% teve impacto desproporcional:
 - Potencial para redes sem fio não foi testado
 
 #### Illinois
-- Melhor estabilidade entre todos
+- Boa estabilidade (CV=1.38%)
 - Desempenho competitivo com CUBIC
-- Excelente escolha para aplicações que requerem consistência
+- Boa escolha para aplicações que requerem equilíbrio entre desempenho e estabilidade
 
 ### 4.2 Recomendações Práticas por Tipo de Rede
 
@@ -402,7 +402,7 @@ Uma perda de apenas 0.5% teve impacto desproporcional:
 
 1. **Habilitação de Algoritmos**: A solução com Docker privilegiado e kmod permitiu acesso a algoritmos adicionais
 2. **Impacto da Latência**: Extremamente severo, reduzindo throughput em até 99.5%
-3. **Estabilidade vs Desempenho**: Illinois oferece o melhor equilíbrio
+3. **Estabilidade vs Desempenho**: CUBIC oferece o melhor equilíbrio com alta estabilidade (CV=0.25%) e melhor throughput
 4. **BBR**: Requer investigação adicional para entender comportamento subótimo
 
 ### 5.3 Limitações do Estudo
