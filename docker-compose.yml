@@ -12,8 +12,10 @@ services:
       - ./results:/results
       - ./scripts:/scripts:ro
       - ./configs:/configs:ro
+      - /lib/modules:/lib/modules:ro
     cap_add:
       - NET_ADMIN  # Necessário para usar tc (traffic control)
+    privileged: true
     command: ["/configs/server-entrypoint.sh"]
     restart: unless-stopped
 
@@ -30,8 +32,10 @@ services:
       - ./results:/results
       - ./scripts:/scripts:ro
       - ./configs:/configs:ro
+      - /lib/modules:/lib/modules:ro
     cap_add:
       - NET_ADMIN  # Necessário para usar tc (traffic control)
+    privileged: true
     depends_on:
       - server
     command: ["/configs/client-entrypoint.sh"]

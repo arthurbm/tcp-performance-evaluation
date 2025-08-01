@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     tcpdump \
     curl \
     jq \
+    kmod \
     && rm -rf /var/lib/apt/lists/*
 
 # Criar diretórios para resultados

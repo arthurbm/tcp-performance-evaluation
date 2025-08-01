@@ -1,0 +1,14 @@
+=== Resumo da Execução - Atividade 2 Completa ===
+Timestamp: 20250801_042246
+Total de testes: 0
+
+Cenários executados:
+1. Baseline (CUBIC)
+2. High Performance (CUBIC + otimizações)
+3. Rede Congestionada (Vegas/Westwood)
+4. Rede com Perdas (Reno)
+5. Datacenter Legacy (CUBIC)
+6. WAN Intercontinental (BBR/Illinois)
+
+Algoritmos testados:
+net.ipv4.tcp_available_congestion_control = reno cubic bbr vegas westwood illinois htcp

@@ -1,0 +1,9 @@
+=== Configurações do Sistema ===
+Timestamp: 20250801_044307
+Data: Fri Aug  1 04:53:33 UTC 2025
+
+Algoritmos disponíveis:
+net.ipv4.tcp_available_congestion_control = reno cubic bbr vegas westwood illinois htcp
+
+Testes executados:
+36

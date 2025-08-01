@@ -1,0 +1,21 @@
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.9",
+		"system_info":	"Linux client 6.8.0-65-generic #68~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Jul 15 18:06:34 UTC 2 x86_64",
+		"timestamp":	{
+			"time":	"Fri, 01 Aug 2025 02:57:09 GMT",
+			"timesecs":	1754017029
+		},
+		"connecting_to":	{
+			"host":	"10.5.0.10",
+			"port":	5201
+		},
+		"cookie":	"3xt5cdke7bogwlf37cjdvhhmekicr4oo77va",
+		"tcp_mss_default":	1448
+	},
+	"intervals":	[],
+	"end":	{
+	}
+}
+iperf3: error - socket buffer size not set correctly

@@ -1,0 +1,9 @@
+=== Configurações do Sistema - Atividade 2 ===
+Data: Fri Aug  1 04:22:46 UTC 2025
+Timestamp: 20250801_042246
+
+=== Algoritmos TCP Disponíveis ===
+net.ipv4.tcp_available_congestion_control = reno cubic bbr vegas westwood illinois htcp
+
+=== Algoritmo Atual ===
+net.ipv4.tcp_congestion_control = cubic

@@ -1,0 +1,20 @@
+{
+  "name": "scenario_8_satellite_hybla",
+  "description": "Comunicação por Satélite - TCP Hybla",
+  "objective": "Avaliar TCP Hybla para enlaces de alta latência (satélite)",
+  "iperf_params": "-w 1M -P 2",
+  "tcp_settings": {
+    "congestion_control": "hybla",
+    "window_size": "1M",
+    "parallel_streams": 2
+  },
+  "network_conditions": {
+    "latency_ms": 600,
+    "bandwidth_mbps": 50,
+    "packet_loss_percent": 0.1,
+    "jitter_ms": 50
+  },
+  "test_duration": 60,
+  "repetitions": 3,
+  "theoretical_justification": "TCP Hybla foi projetado especificamente para enlaces satelitais com alta latência (600ms RTT típico). Ele normaliza o comportamento do TCP independentemente do RTT, mantendo a mesma agressividade que teria em enlaces terrestres. Com banda moderada (50Mbps) e perda mínima (0.1%), Hybla supera algoritmos tradicionais em cenários satelitais."
+}

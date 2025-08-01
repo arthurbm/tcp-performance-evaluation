@@ -1,0 +1,20 @@
+{
+  "name": "scenario_7_datacenter_dctcp",
+  "description": "Datacenter - DCTCP para Baixa Latência",
+  "objective": "Avaliar DCTCP otimizado para datacenters com ECN",
+  "iperf_params": "-w 512K -P 8",
+  "tcp_settings": {
+    "congestion_control": "dctcp",
+    "window_size": "512K",
+    "parallel_streams": 8
+  },
+  "network_conditions": {
+    "latency_ms": 1,
+    "bandwidth_mbps": 1000,
+    "packet_loss_percent": null,
+    "jitter_ms": null
+  },
+  "test_duration": 30,
+  "repetitions": 5,
+  "theoretical_justification": "DCTCP (Data Center TCP) é otimizado para datacenters com ECN (Explicit Congestion Notification). Com latência ultra-baixa (1ms) e alta banda (1Gbps), DCTCP mantém buffers pequenos e responde rapidamente ao congestionamento, ideal para aplicações sensíveis à latência em datacenters modernos."
+}
